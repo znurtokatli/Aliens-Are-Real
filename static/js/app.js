@@ -43,5 +43,26 @@ function dateSearch() {
 
 inputDate.on("change", dateSearch);
 
-//Part3 - Category Search///////////////////////////////
+//Part3 - Multiple Criteria Search///////////////////////////////
 
+function updateFilteredData(queryField, queryValue) {
+
+	// Reset filteredData to complete set of data (ie. tableData)
+	// Note: New filters cannot be performed from a set of data that may already have
+	// 		 multiple filters.
+	filteredData = tableData; 
+
+	// Update filterCriteria's queryField with new queryValue
+	filterCriteria[queryField] = queryValue;
+
+  	// Loop through each criteria and update filteredData
+  	Object.entries(filterCriteria).forEach(([key, value]) => {
+		filteredData = filteredData.filter(function (sighting) {
+			if (value === 'No filter') {
+				return sighting[key];
+			} else {
+				return sighting[key] === value;
+			}
+		});
+  	});
+}
