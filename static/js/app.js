@@ -3,11 +3,17 @@
  */
 
 //references
-var tableData = data; 
-
+var tableData = data;  
 var tbody = d3.select("tbody"); 
+
 var inputDate = d3.select("#datetime");
-var buttonFilter = d3.select("filter-btn");
+var inputCity = d3.select("#city");
+var inputState = d3.select("#state");
+var inputCountry = d3.select("#country");
+var inputShape = d3.select("#shape");
+
+var buttonFilter = d3.select("filter-btn"); 
+
  
 //Part1 - Import Data to Table///////////////////////////////
 
@@ -27,7 +33,7 @@ function populateUfoTable(pData) {
     })
 };
 
-populateUfoTable(tableData)
+populateUfoTable(tableData);
 
 //Part2 - Date Search On Table///////////////////////////////
 
@@ -42,27 +48,38 @@ function dateSearch() {
 };
 
 inputDate.on("change", dateSearch);
+//buttonFilter.on("click", dateSearch);  
 
 //Part3 - Multiple Criteria Search///////////////////////////////
+ /* 
+function filterPage() {
 
-function updateFilteredData(queryField, queryValue) {
+    d3.event.preventDefault(); 
+ 
 
-	// Reset filteredData to complete set of data (ie. tableData)
-	// Note: New filters cannot be performed from a set of data that may already have
-	// 		 multiple filters.
-	filteredData = tableData; 
+    filteredData = filteredData.filter( populateUfoTable => populateUfoTable.city === inputCity.property("value")); 
 
-	// Update filterCriteria's queryField with new queryValue
-	filterCriteria[queryField] = queryValue;
 
-  	// Loop through each criteria and update filteredData
-  	Object.entries(filterCriteria).forEach(([key, value]) => {
-		filteredData = filteredData.filter(function (sighting) {
-			if (value === 'No filter') {
-				return sighting[key];
-			} else {
-				return sighting[key] === value;
-			}
-		});
-  	});
-}
+    var cityValue = inputCity.property("value").toLowerCase().trim();
+    var stateValue = inputState.property("value").toLowerCase().trim();
+    var countryValue = inputCountry.property("value").toLowerCase().trim();    
+    var shapeValue = inputShape.property("value").toLowerCase().trim();
+   
+    if (cityValue != "") {
+         filterData = filterData.filter(entry => entry.city === cityValue);     
+    }
+    if (stateValue != "") {
+         filterData = filterData.filter(entry => entry.state === stateValue);     
+    }
+    if (countryValue != "") {
+         filterData = filterData.filter(entry => entry.country === countryValue);     
+    }
+    if (shapeValue != "") {
+         filterData = filterData.filter(entry => entry.shape === shapeValue);     
+    }  
+
+    populateUfoTable(filteredData);
+};
+
+
+//buttonFilter.on("click", filterPage);   */
